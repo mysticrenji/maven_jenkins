@@ -1,5 +1,9 @@
 pipeline {
-    agent {
+environment {
+    registry = "mysticrenji/maven-test"
+    registryCredential = 'dockerhub'
+  }  
+    agent any {
         docker {
             image 'maven:3-alpine' 
             args '-v /root/.m2:/root/.m2' 
@@ -22,6 +26,29 @@ pipeline {
             }
               }
               
+              stage('Building image') {
+		      steps{
+		        script {
+		          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+		        }
+		      }
+		    }
+		    
+		     stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
+    stage('Remove Unused docker image') {
+      steps{
+        sh "docker rmi $registry:$BUILD_NUMBER"
+      }
+    }
+		              
               stage('Deliver') { 
             steps {
                 sh 'echo Deployment is complete' 
