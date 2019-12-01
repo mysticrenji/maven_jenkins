@@ -2,6 +2,7 @@ pipeline {
 environment {
     registry = "mysticrenji/maven-test"
     registryCredential = 'dockerhub'
+        dockerImage = ''
   }  
     agent {
         docker {
@@ -35,12 +36,12 @@ environment {
 		    }
 		    
 		     stage('Deploy Image') {
-      steps{
-        script {
-          docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
-          }
-        }
+		      steps{
+		        script {
+		          docker.withRegistry( '', registryCredential ) {
+		            dockerImage.push()
+		          }
+		        }
       }
     }
     stage('Remove Unused docker image') {
