@@ -51,6 +51,7 @@ environment {
 		        }
       }
     }
+    
     stage('Remove Unused docker image') {
   
       steps{
