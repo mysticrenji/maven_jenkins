@@ -5,9 +5,7 @@ environment {
         dockerImage = ''
   }  
     agent {
-        docker {
-            image 'maven:3-alpine' 
-        }
+        docker { image 'maven:3-alpine' }
     }
     stages {
         stage('Build') { 
@@ -34,7 +32,7 @@ environment {
 		        }
 		      }
 		    }
-		    }
+		    
 		    
 		     stage('Deploy Image') {
 		        agent any
@@ -64,5 +62,5 @@ environment {
         }
 
     
-    
+    }
 }
