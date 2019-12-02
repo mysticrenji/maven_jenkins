@@ -8,9 +8,16 @@ environment {
         docker { image 'maven:3-alpine' }
     }
     stages {
+    
+    stage('Clean') { 
+            steps {
+                 sh 'mvn --batch-mode clean'
+            }
+        }
         stage('Build') { 
             steps {
-                sh 'mvn -B -DskipTests clean package' 
+            sh 'mvn -B -DskipTests --batch-mode compile'
+                //sh 'mvn -B -DskipTests clean package' 
             }
         }
         stage ('Test') {
