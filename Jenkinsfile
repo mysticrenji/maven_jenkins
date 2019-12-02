@@ -27,7 +27,7 @@ environment {
               }
               
               stage('Building image') {
-              
+                 agent any
 		      steps{
 		        script {
 		          dockerImage = docker.build registry + ":$BUILD_NUMBER"
@@ -37,7 +37,8 @@ environment {
 		    }
 		    
 		     stage('Deploy Image') {
-		     agent any { 
+		        agent any
+		    
 		      steps{
 		        script {
 		          docker.withRegistry( '', registryCredential ) {
@@ -45,15 +46,15 @@ environment {
 		          }
 		        }
       }
-    }
+    
     }
     stage('Remove Unused docker image') {
-    agent any { 
+  
       steps{
         sh "docker rmi $registry:$BUILD_NUMBER"
       }
     }
-    }
+    
     
 		              
               stage('Deliver') { 
