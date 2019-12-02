@@ -25,7 +25,10 @@ environment {
               }
               
               stage('Building image') {
-                 agent any
+                 agent {
+                     label 'slaves'
+                 }
+
 		      steps{
 		        script {
 		          dockerImage = docker.build registry + ":$BUILD_NUMBER"
@@ -35,7 +38,10 @@ environment {
 		    
 		    
 		     stage('Deploy Image') {
-		        agent any
+		        agent {
+		            label 'slaves'
+		        }
+
 		    
 		      steps{
 		        script {
