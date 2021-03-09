@@ -9,6 +9,11 @@ spec:
       command:
         - cat
       tty: true
+    - name: java
+      image: maven:3.3.9-jdk-8-alpine
+      command:
+        - cat
+      tty: true
     - name: jfrog-cli-go
       image: docker.bintray.io/jfrog/jfrog-cli-go:latest
       imagePullPolicy: Always
